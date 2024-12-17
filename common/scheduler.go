@@ -96,66 +96,100 @@ func (s *Scheduler) RemoveTask(taskID string) {
 }
 
 // Start 启动调度器
-func (s *Scheduler) Start() {
+func (s *Scheduler) Start() error {
+	GetLogger().Info("Scheduler starting...")
 	go s.run()
+	GetLogger().Info("Scheduler started successfully")
+	return nil
 }
 
 // Stop 停止调度器
-func (s *Scheduler) Stop() {
+func (s *Scheduler) Stop() error {
+	GetLogger().Info("Scheduler stopping...")
 	s.cancel()
+	GetLogger().Info("Scheduler stopped successfully")
+	return nil
 }
 
 // run 运行调度循环
 func (s *Scheduler) run() {
+	GetLogger().Info("Scheduler run loop started")
+
+	defer func() {
+		if r := recover(); r != nil {
+			GetLogger().Error("Scheduler panic recovered",
+				zap.Any("error", r))
+		}
+	}()
+
 	for {
-		s.mu.Lock()
-		if len(s.tasks) == 0 {
-			s.mu.Unlock()
-			time.Sleep(time.Second)
-			continue
-		}
-
-		task := heap.Pop(&s.tasks).(Task)
-		now := time.Now()
-		nextTime := task.NextTime()
-
-		if nextTime.After(now) {
-			// 把任务放回去，等待下次检查
-			heap.Push(&s.tasks, task)
-			s.mu.Unlock()
-			time.Sleep(time.Second)
-			continue
-		}
-
-		// 执行任务
-		go func(t Task) {
-			if err := t.Execute(s.ctx); err != nil {
-				//处理错误
-				GetLogger().Error("Task execution failed",
-					zap.String("task_id", t.ID()),
-					zap.String("error", err.Error()))
-			}
-
+		select {
+		case <-s.ctx.Done():
+			GetLogger().Info("Scheduler context cancelled, stopping run loop")
+			return
+		default:
 			s.mu.Lock()
-			defer s.mu.Unlock()
-
-			if t.IsRepeat() {
-				// 重复任务，更新下次执行时间并重新入队
-				nextTask := &BaseTask{
-					id:       t.ID(),
-					nextTime: time.Now().Add(t.GetInterval()),
-					execute:  t.Execute,
-					repeat:   true,
-					interval: t.GetInterval(),
-				}
-				heap.Push(&s.tasks, nextTask)
-			} else {
-				// 一次性任务，从映射表中删除
-				delete(s.taskMap, t.ID())
+			if len(s.tasks) == 0 {
+				s.mu.Unlock()
+				time.Sleep(time.Second)
+				continue
 			}
-		}(task)
 
-		s.mu.Unlock()
+			task := heap.Pop(&s.tasks).(Task)
+			now := time.Now()
+			nextTime := task.NextTime()
+
+			if nextTime.After(now) {
+				heap.Push(&s.tasks, task)
+				s.mu.Unlock()
+				time.Sleep(time.Second)
+				continue
+			}
+
+			GetLogger().Info("Executing task",
+				zap.String("task_id", task.ID()),
+				zap.Time("scheduled_time", nextTime),
+				zap.Time("actual_time", now),
+				zap.Bool("is_repeat", task.IsRepeat()))
+
+			// 执行任务
+			go func(t Task) {
+				startTime := time.Now()
+				if err := t.Execute(s.ctx); err != nil {
+					GetLogger().Error("Task execution failed",
+						zap.String("task_id", t.ID()),
+						zap.Error(err),
+						zap.Duration("duration", time.Since(startTime)))
+				} else {
+					GetLogger().Info("Task executed successfully",
+						zap.String("task_id", t.ID()),
+						zap.Duration("duration", time.Since(startTime)))
+				}
+
+				s.mu.Lock()
+				defer s.mu.Unlock()
+
+				if t.IsRepeat() {
+					nextTask := &BaseTask{
+						id:       t.ID(),
+						nextTime: time.Now().Add(t.GetInterval()),
+						execute:  t.Execute,
+						repeat:   true,
+						interval: t.GetInterval(),
+					}
+					heap.Push(&s.tasks, nextTask)
+					GetLogger().Info("Repeat task rescheduled",
+						zap.String("task_id", t.ID()),
+						zap.Time("next_time", nextTask.nextTime))
+				} else {
+					delete(s.taskMap, t.ID())
+					GetLogger().Info("One-time task removed",
+						zap.String("task_id", t.ID()))
+				}
+			}(task)
+
+			s.mu.Unlock()
+		}
 	}
 }
 

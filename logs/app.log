@@ -145,3 +145,83 @@
 {"level":"info","time":"2024-12-17 18:05:58.547","caller":"common/manager.go:52","msg":"server started","addr":":8080"}
 {"level":"debug","time":"2024-12-17 18:07:44.212","caller":"mineNet/handler.go:25","msg":"handler set","cmd_id":3}
 {"level":"info","time":"2024-12-17 18:07:44.212","caller":"common/manager.go:52","msg":"server started","addr":":8080"}
+{"level":"error","time":"2024-12-18 00:23:41.329","caller":"common/manager.go:52","msg":"failed to start server","addr":":8080","error":"listen tcp :8080: bind: address already in use","stacktrace":"mineNet/common.(*ComponentManager).Start.func1\n\t/Users/caomaoboy/GolandProjects/mineNet/common/manager.go:52"}
+{"level":"info","time":"2024-12-18 00:23:57.323","caller":"common/manager.go:52","msg":"server started","addr":":8080"}
+{"level":"error","time":"2024-12-18 00:51:53.424","caller":"network/tcp_net.go:89","msg":"accept error","error":"accept tcp [::]:8080: use of closed network connection","stacktrace":"mineNet/network.(*TCPServer).Start\n\t/Users/caomaoboy/GolandProjects/mineNet/network/tcp_net.go:89\nmineNet/common.(*ComponentManager).Start.func1\n\t/Users/caomaoboy/GolandProjects/mineNet/common/manager.go:52"}
+{"level":"info","time":"2024-12-18 00:51:53.424","caller":"common/manager.go:83","msg":"server stopped","shutdown_duration":0.000060792}
+{"level":"info","time":"2024-12-18 00:52:29.979","caller":"common/manager.go:52","msg":"server started","addr":":8080"}
+{"level":"error","time":"2024-12-18 00:58:49.130","caller":"network/tcp_net.go:89","msg":"accept error","error":"accept tcp [::]:8080: use of closed network connection","stacktrace":"mineNet/network.(*TCPServer).Start\n\t/Users/caomaoboy/GolandProjects/mineNet/network/tcp_net.go:89\nmineNet/common.(*ComponentManager).Start.func1\n\t/Users/caomaoboy/GolandProjects/mineNet/common/manager.go:52"}
+{"level":"info","time":"2024-12-18 00:58:49.130","caller":"common/manager.go:83","msg":"server stopped","shutdown_duration":0.000079417}
+{"level":"info","time":"2024-12-18 00:58:52.309","caller":"common/manager.go:52","msg":"server started","addr":":8080"}
+{"level":"info","time":"2024-12-18 00:58:52.309","caller":"common/manager.go:52","msg":"Scheduler starting..."}
+{"level":"info","time":"2024-12-18 00:58:52.311","caller":"common/manager.go:52","msg":"Scheduler started successfully"}
+{"level":"info","time":"2024-12-18 00:58:52.311","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler run loop started"}
+{"level":"info","time":"2024-12-18 01:05:49.172","caller":"common/manager.go:83","msg":"Scheduler stopping..."}
+{"level":"error","time":"2024-12-18 01:05:49.172","caller":"network/tcp_net.go:89","msg":"accept error","error":"accept tcp [::]:8080: use of closed network connection","stacktrace":"mineNet/network.(*TCPServer).Start\n\t/Users/caomaoboy/GolandProjects/mineNet/network/tcp_net.go:89\nmineNet/common.(*ComponentManager).Start.func1\n\t/Users/caomaoboy/GolandProjects/mineNet/common/manager.go:52"}
+{"level":"info","time":"2024-12-18 01:05:49.172","caller":"common/manager.go:83","msg":"Scheduler stopped successfully"}
+{"level":"info","time":"2024-12-18 01:05:49.172","caller":"common/manager.go:83","msg":"server stopped","shutdown_duration":0.000076416}
+{"level":"info","time":"2024-12-18 01:05:51.687","caller":"common/manager.go:52","msg":"server started","addr":":8080"}
+{"level":"info","time":"2024-12-18 01:05:51.687","caller":"common/manager.go:52","msg":"Scheduler starting..."}
+{"level":"info","time":"2024-12-18 01:05:51.687","caller":"common/manager.go:52","msg":"Scheduler started successfully"}
+{"level":"info","time":"2024-12-18 01:05:51.687","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler run loop started"}
+{"level":"info","time":"2024-12-18 01:07:57.146","caller":"common/manager.go:83","msg":"Scheduler stopping..."}
+{"level":"error","time":"2024-12-18 01:07:57.146","caller":"network/tcp_net.go:89","msg":"accept error","error":"accept tcp [::]:8080: use of closed network connection","stacktrace":"mineNet/network.(*TCPServer).Start\n\t/Users/caomaoboy/GolandProjects/mineNet/network/tcp_net.go:89\nmineNet/common.(*ComponentManager).Start.func1\n\t/Users/caomaoboy/GolandProjects/mineNet/common/manager.go:52"}
+{"level":"info","time":"2024-12-18 01:07:57.146","caller":"common/manager.go:83","msg":"server stopped","shutdown_duration":0.00012325}
+{"level":"info","time":"2024-12-18 01:07:57.147","caller":"common/manager.go:83","msg":"Scheduler stopped successfully"}
+{"level":"info","time":"2024-12-18 01:07:59.611","caller":"common/manager.go:53","msg":"Scheduler starting..."}
+{"level":"info","time":"2024-12-18 01:07:59.612","caller":"common/manager.go:53","msg":"Scheduler started successfully"}
+{"level":"info","time":"2024-12-18 01:07:59.611","caller":"common/manager.go:53","msg":"server started","addr":":8080"}
+{"level":"info","time":"2024-12-18 01:07:59.612","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler run loop started"}
+{"level":"info","time":"2024-12-18 01:09:46.430","caller":"common/manager.go:85","msg":"Scheduler stopping..."}
+{"level":"error","time":"2024-12-18 01:09:46.430","caller":"network/tcp_net.go:89","msg":"accept error","error":"accept tcp [::]:8080: use of closed network connection","stacktrace":"mineNet/network.(*TCPServer).Start\n\t/Users/caomaoboy/GolandProjects/mineNet/network/tcp_net.go:89\nmineNet/common.(*ComponentManager).Start.func1\n\t/Users/caomaoboy/GolandProjects/mineNet/common/manager.go:53"}
+{"level":"info","time":"2024-12-18 01:09:46.430","caller":"common/manager.go:85","msg":"Scheduler stopped successfully"}
+{"level":"info","time":"2024-12-18 01:09:46.430","caller":"common/manager.go:85","msg":"server stopped","shutdown_duration":0.00006675}
+{"level":"info","time":"2024-12-18 01:09:49.184","caller":"common/manager.go:53","msg":"Scheduler starting..."}
+{"level":"info","time":"2024-12-18 01:09:49.184","caller":"common/manager.go:53","msg":"server started","addr":":8080"}
+{"level":"info","time":"2024-12-18 01:09:49.184","caller":"common/manager.go:53","msg":"Scheduler started successfully"}
+{"level":"info","time":"2024-12-18 01:09:49.184","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler run loop started"}
+{"level":"info","time":"2024-12-18 01:09:52.577","caller":"common/manager.go:85","msg":"Scheduler stopping..."}
+{"level":"info","time":"2024-12-18 01:09:52.577","caller":"common/manager.go:85","msg":"server stopped","shutdown_duration":0.000039334}
+{"level":"info","time":"2024-12-18 01:09:52.577","caller":"common/manager.go:85","msg":"Scheduler stopped successfully"}
+{"level":"error","time":"2024-12-18 01:09:52.577","caller":"network/tcp_net.go:89","msg":"accept error","error":"accept tcp [::]:8080: use of closed network connection","stacktrace":"mineNet/network.(*TCPServer).Start\n\t/Users/caomaoboy/GolandProjects/mineNet/network/tcp_net.go:89\nmineNet/common.(*ComponentManager).Start.func1\n\t/Users/caomaoboy/GolandProjects/mineNet/common/manager.go:53"}
+{"level":"info","time":"2024-12-18 01:09:53.185","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler context cancelled, stopping run loop"}
+{"level":"info","time":"2024-12-18 01:11:14.379","caller":"common/manager.go:53","msg":"Scheduler starting..."}
+{"level":"info","time":"2024-12-18 01:11:14.379","caller":"common/manager.go:53","msg":"server started","addr":":8080"}
+{"level":"info","time":"2024-12-18 01:11:14.379","caller":"common/manager.go:53","msg":"Scheduler started successfully"}
+{"level":"info","time":"2024-12-18 01:11:14.379","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler run loop started"}
+{"level":"info","time":"2024-12-18 01:11:15.426","caller":"common/manager.go:85","msg":"Scheduler stopping..."}
+{"level":"error","time":"2024-12-18 01:11:15.426","caller":"network/tcp_net.go:89","msg":"accept error","error":"accept tcp [::]:8080: use of closed network connection","stacktrace":"mineNet/network.(*TCPServer).Start\n\t/Users/caomaoboy/GolandProjects/mineNet/network/tcp_net.go:89\nmineNet/common.(*ComponentManager).Start.func1\n\t/Users/caomaoboy/GolandProjects/mineNet/common/manager.go:53"}
+{"level":"info","time":"2024-12-18 01:11:15.426","caller":"common/manager.go:85","msg":"Scheduler stopped successfully"}
+{"level":"info","time":"2024-12-18 01:11:15.426","caller":"common/manager.go:85","msg":"server stopped","shutdown_duration":0.000048625}
+{"level":"info","time":"2024-12-18 01:11:16.379","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler context cancelled, stopping run loop"}
+{"level":"info","time":"2024-12-18 01:11:31.545","caller":"common/manager.go:53","msg":"Scheduler starting..."}
+{"level":"info","time":"2024-12-18 01:11:31.546","caller":"common/manager.go:53","msg":"server started","addr":":8080"}
+{"level":"info","time":"2024-12-18 01:11:31.547","caller":"common/manager.go:53","msg":"Scheduler started successfully"}
+{"level":"info","time":"2024-12-18 01:11:31.547","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler run loop started"}
+{"level":"info","time":"2024-12-18 01:11:32.924","caller":"common/manager.go:85","msg":"Scheduler stopping..."}
+{"level":"info","time":"2024-12-18 01:11:32.924","caller":"common/manager.go:85","msg":"server stopped","shutdown_duration":0.000057334}
+{"level":"error","time":"2024-12-18 01:11:32.924","caller":"network/tcp_net.go:89","msg":"accept error","error":"accept tcp [::]:8080: use of closed network connection","stacktrace":"mineNet/network.(*TCPServer).Start\n\t/Users/caomaoboy/GolandProjects/mineNet/network/tcp_net.go:89\nmineNet/common.(*ComponentManager).Start.func1\n\t/Users/caomaoboy/GolandProjects/mineNet/common/manager.go:53"}
+{"level":"info","time":"2024-12-18 01:11:32.924","caller":"common/manager.go:85","msg":"Scheduler stopped successfully"}
+{"level":"info","time":"2024-12-18 01:11:33.549","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler context cancelled, stopping run loop"}
+{"level":"info","time":"2024-12-18 01:17:00.616","caller":"common/manager.go:53","msg":"server started","addr":":8080"}
+{"level":"info","time":"2024-12-18 01:17:00.616","caller":"common/manager.go:53","msg":"Scheduler starting..."}
+{"level":"info","time":"2024-12-18 01:17:00.617","caller":"common/manager.go:53","msg":"Scheduler started successfully"}
+{"level":"info","time":"2024-12-18 01:17:00.617","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler run loop started"}
+{"level":"info","time":"2024-12-18 01:17:03.916","caller":"common/manager.go:85","msg":"Scheduler stopping..."}
+{"level":"info","time":"2024-12-18 01:17:03.917","caller":"network/tcp_net.go:91","msg":"listener closed, stopping accept loop"}
+{"level":"info","time":"2024-12-18 01:17:03.917","caller":"common/manager.go:85","msg":"Scheduler stopped successfully"}
+{"level":"info","time":"2024-12-18 01:17:03.917","caller":"common/manager.go:85","msg":"server stopped","shutdown_duration":0.000091542}
+{"level":"info","time":"2024-12-18 01:17:04.617","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler context cancelled, stopping run loop"}
+{"level":"info","time":"2024-12-18 01:17:39.619","caller":"common/manager.go:53","msg":"Scheduler starting..."}
+{"level":"info","time":"2024-12-18 01:17:39.620","caller":"common/manager.go:53","msg":"server started","addr":":8080"}
+{"level":"info","time":"2024-12-18 01:17:39.622","caller":"common/manager.go:53","msg":"Scheduler started successfully"}
+{"level":"info","time":"2024-12-18 01:17:39.622","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler run loop started"}
+{"level":"info","time":"2024-12-18 01:29:05.796","caller":"common/manager.go:85","msg":"Scheduler stopping..."}
+{"level":"info","time":"2024-12-18 01:29:05.796","caller":"common/manager.go:85","msg":"server stopped","shutdown_duration":0.000148959}
+{"level":"info","time":"2024-12-18 01:29:05.796","caller":"network/tcp_net.go:91","msg":"listener closed, stopping accept loop"}
+{"level":"info","time":"2024-12-18 01:29:05.797","caller":"common/manager.go:85","msg":"Scheduler stopped successfully"}
+{"level":"info","time":"2024-12-18 01:29:11.443","caller":"common/manager.go:53","msg":"Scheduler starting..."}
+{"level":"info","time":"2024-12-18 01:29:11.443","caller":"common/manager.go:53","msg":"server started","addr":":8080"}
+{"level":"info","time":"2024-12-18 01:29:11.443","caller":"common/manager.go:53","msg":"Scheduler started successfully"}
+{"level":"info","time":"2024-12-18 01:29:11.443","caller":"runtime/asm_arm64.s:1223","msg":"Scheduler run loop started"}
+{"level":"info","time":"2024-12-18 01:29:11.998","caller":"common/manager.go:53","msg":"Redis connected successfully","addr":"154.201.76.58:6379","db":"0"}

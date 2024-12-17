@@ -15,11 +15,12 @@ func main() {
 	// 启动 metrics 服务器
 	metricsServer := metrics.NewMetricsServer(":9090")
 	cfg := mconfig.GetConfig()
+	schedulerServer := common.NewScheduler()
 	err = common.InitLogger(&cfg.Log)
 	if err != nil {
 		panic(err)
 	}
-	_, err = common.InitRedis(&cfg.Redis)
+	redisServer, err := common.InitRedis(&cfg.Redis)
 	if err != nil {
 		panic(err)
 	}
@@ -31,6 +32,8 @@ func main() {
 	InitApp(server)
 	manager.Register(server)
 	manager.Register(metricsServer)
+	manager.Register(schedulerServer)
+	manager.Register(redisServer)
 	err = manager.Start()
 	if err != nil {
 		panic(err)

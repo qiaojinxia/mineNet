@@ -3,6 +3,7 @@ package common
 import (
 	"context"
 	"fmt"
+	"go.uber.org/zap"
 	"os"
 	"os/signal"
 	"sync"
@@ -50,7 +51,8 @@ func (m *ComponentManager) Start() error {
 		go func(comp IComponent) {
 			defer m.wg.Done()
 			if err := comp.Start(); err != nil {
-				fmt.Printf("Component start error: %v\n", err)
+				GetLogger().Error("Component start failed",
+					zap.Error(err))
 			}
 		}(c)
 	}

@@ -2,12 +2,14 @@ package network
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"go.uber.org/zap"
 	"mineNet/common"
 	mconfig "mineNet/config"
 	"mineNet/metrics"
 	"net"
+	"strings"
 	"sync"
 	"time"
 )
@@ -97,12 +99,13 @@ func (s *TCPServer) Stop() error {
 
 	if err := s.conns.Close(); err != nil {
 		s.metrics.ShutdownErrors.Inc()
-		common.GetLogger().Error("error closing connections",
+		common.GetLogger().Error("failed closing connections",
 			zap.Error(err),
 		)
 	}
 
 	if s.listener != nil {
+		// 等待现有连接处理完成
 		if err := s.listener.Close(); err != nil {
 			s.metrics.ShutdownErrors.Inc()
 			common.GetLogger().Error("error closing listener",
@@ -134,11 +137,32 @@ func (s *TCPServer) acceptLoop() {
 	for {
 		select {
 		case <-s.ctx.Done():
+			common.GetLogger().Info("acceptLoop stopped due to context cancellation")
 			return
 		default:
 			startTime := time.Now()
 			conn, err := s.listener.Accept()
+			// 处理Accept错误
 			if err != nil {
+				// 检查是否是由于listener被关闭导致的错误
+				var netErr net.Error
+				if errors.As(err, &netErr) && netErr.Temporary() {
+					// 临时错误，等待后重试
+					common.GetLogger().Warn("temporary accept error, retrying",
+						zap.Error(err),
+						zap.Duration("retry_after", time.Second),
+					)
+					time.Sleep(time.Second)
+					continue
+				}
+
+				// 检查是否是由于关闭导致的错误
+				if strings.Contains(err.Error(), "use of closed network connection") {
+					common.GetLogger().Info("listener closed, stopping accept loop")
+					return
+				}
+
+				// 其他错误
 				s.metrics.AcceptErrors.Inc()
 				common.GetLogger().Error("accept error",
 					zap.Error(err),

@@ -2,6 +2,8 @@ package common
 
 import (
 	"context"
+	"fmt"
+	"go.uber.org/zap"
 	mconfig "mineNet/config"
 	"sync"
 )
@@ -12,10 +14,13 @@ var (
 	once        sync.Once
 )
 
+type RedisServer struct {
+	*redis.Client
+}
+
 // InitRedis 初始化 Redis 客户端
-func InitRedis(cfg *mconfig.RedisConfig) (*redis.Client, error) {
+func InitRedis(cfg *mconfig.RedisConfig) (*RedisServer, error) {
 	// 初始化 Redis 客户端
-	var err error
 	once.Do(func() {
 		redisClient = redis.NewClient(&redis.Options{
 			Addr:     cfg.Addr,
@@ -23,10 +28,7 @@ func InitRedis(cfg *mconfig.RedisConfig) (*redis.Client, error) {
 			DB:       cfg.DB,
 		})
 	})
-
-	// Ping 测试连接
-	err = redisClient.Ping(context.Background()).Err()
-	return redisClient, err
+	return &RedisServer{redisClient}, nil
 }
 
 // GetRedisClient 获取 Redis 单例客户端
@@ -38,10 +40,42 @@ func GetRedisClient() *redis.Client {
 	return redisClient
 }
 
-// CloseRedisClient 关闭 Redis 客户端
-func CloseRedisClient() error {
+// Start 关闭 Redis 客户端
+func (rc *RedisServer) Start() error {
+	if redisClient == nil {
+		GetLogger().Error("Redis client is nil")
+		return fmt.Errorf("redis client is nil")
+	}
+
+	// Ping 测试连接
+	if err := redisClient.Ping(context.Background()).Err(); err != nil {
+		GetLogger().Error("Redis connection failed",
+			zap.Error(err),
+			zap.String("addr", redisClient.Options().Addr))
+		return err
+	}
+
+	GetLogger().Info("Redis connected successfully",
+		zap.String("addr", redisClient.Options().Addr),
+		zap.String("db", fmt.Sprintf("%d", redisClient.Options().DB)))
+
+	return nil
+}
+
+// Stop 关闭 Redis 客户端
+func (rc *RedisServer) Stop() error {
 	if redisClient != nil {
-		return redisClient.Close()
+		GetLogger().Info("Closing Redis connection",
+			zap.String("addr", redisClient.Options().Addr))
+
+		if err := redisClient.Close(); err != nil {
+			GetLogger().Error("Failed to close Redis connection",
+				zap.Error(err),
+				zap.String("addr", redisClient.Options().Addr))
+			return err
+		}
+
+		GetLogger().Info("Redis connection closed successfully")
 	}
 	return nil
 }

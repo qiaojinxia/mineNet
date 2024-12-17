@@ -14,9 +14,9 @@ PROTO_FILES=$(find $PROTO_ROOT -name "*.proto")
 # 生成代码
 echo "Generating code..."
 protoc --plugin=protoc-gen-msg-type=./$PLUGIN_NAME \
-       --msg-type-out=. \
+       --msg-type_out=. \
        --proto_path=$PROTO_ROOT \
-       "$PROTO_FILES"
+       $PROTO_FILES
 
 
 # 检查结果
@@ -24,7 +24,7 @@ protoc --plugin=protoc-gen-msg-type=./$PLUGIN_NAME \
 if [ $? -eq 0 ]; then
     echo "Code generation successful"
     echo "Generated files:"
-    ls -l msgtype.go
+    ls -l msg-type.go
     mv ./msg-type.go ./proto/
 else
     echo "Code generation failed"
