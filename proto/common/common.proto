@@ -1,0 +1,12 @@
+// message.proto
+syntax = "proto3";
+package pb;
+option go_package = "proto/common";
+
+
+// 基础消息
+message BaseMessage {
+  uint64 request_id = 1;
+  uint32 msg_type = 2;
+  bytes payload = 3;
+}

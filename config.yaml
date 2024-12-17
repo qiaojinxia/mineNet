@@ -1,0 +1,42 @@
+conn:
+  # 压缩和加密设置
+  compress_enabled: true
+  encrypt_enabled: true
+  encrypt_key: "caomao@123"  # base64编码的密钥
+  encrypt_iv: "caomao@321"    # base64编码的IV
+
+  # 心跳设置
+  heartbeat_interval: 30s
+  heartbeat_timeout: 10s
+  retry_count: 3
+
+  # 限流设置
+  rps: 1000
+  burst_size: 100
+
+  # 超时设置
+  read_timeout: 5s
+  write_timeout: 5s
+
+  # 消息相关设置
+  max_message_size: 1048576  # 1MB
+  send_queue_size: 1000
+  recv_queue_size: 1000
+
+conn_pool:
+  # 连接池设置
+  max_conns: 100
+  min_idle_conns: 10
+  max_error_count: 3
+  idle_timeout: 300s      # 5分钟
+  max_lifetime: 3600s     # 1小时
+  max_idle_time: 1800s    # 30分钟
+
+server:
+  app_name: "xxx"
+  addr: ":8080"
+  max_connections: 1000
+redis:
+  addr: "154.201.76.58:6379"    # Redis 服务器地址
+  password: "Caomao123321"               # Redis 密码（如果没有密码，可以留空）
+  db: 0                      # Redis 数据库索引
