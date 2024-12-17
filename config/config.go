@@ -16,6 +16,7 @@ type Config struct {
 	ConnPool ConnPoolConfig `mapstructure:"conn_pool"`
 	Server   ServerConfig   `mapstructure:"server"`
 	Redis    RedisConfig    `mapstructure:"redis"`
+	Log      LogConfig      `mapstructure:"log"`
 }
 
 // GetConfig 获取配置单例

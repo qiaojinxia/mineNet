@@ -32,11 +32,20 @@ conn_pool:
   max_lifetime: 3600s     # 1小时
   max_idle_time: 1800s    # 30分钟
 
+log:
+  log_path: "./logs/app.log"    # 日志文件路径
+  log_level: "info"             # 日志级别 debug/info/warn/error
+  max_size: 100                 # 单个日志文件最大尺寸，单位 MB
+  max_backups: 10              # 最大保留的日志文件数量
+  max_age: 30                  # 日志文件保留天数
+  compress: true               # 是否压缩历史日志
+  show_console: true           # 是否同时输出到控制台
+
 server:
   app_name: "xxx"
   addr: ":8080"
   max_connections: 1000
 redis:
   addr: "154.201.76.58:6379"    # Redis 服务器地址
-  password: "Caomao123321"               # Redis 密码（如果没有密码，可以留空）
-  db: 0                      # Redis 数据库索引
+  password: "Caomao123321"      # Redis 密码（如果没有密码，可以留空）
+  db: 0                         # Redis 数据库索引

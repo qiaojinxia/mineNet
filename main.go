@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"mineNet/common"
 	mconfig "mineNet/config"
 	"mineNet/metrics"
@@ -15,22 +14,11 @@ func main() {
 	}
 	// 启动 metrics 服务器
 	metricsServer := metrics.NewMetricsServer(":9090")
-	go func() {
-		if err := metricsServer.Start(); err != nil {
-			log.Fatalf("Failed to start metrics server: %v", err)
-		}
-	}()
-	config := &common.Config{
-		LogPath:     "logs/app.log",
-		LogLevel:    "debug",
-		MaxSize:     100,
-		MaxBackups:  30,
-		MaxAge:      7,
-		Compress:    true,
-		ShowConsole: true,
-	}
-	common.MustInitLogger(config)
 	cfg := mconfig.GetConfig()
+	err = common.InitLogger(&cfg.Log)
+	if err != nil {
+		panic(err)
+	}
 	_, err = common.InitRedis(&cfg.Redis)
 	if err != nil {
 		panic(err)
@@ -42,6 +30,7 @@ func main() {
 	}
 	InitApp(server)
 	manager.Register(server)
+	manager.Register(metricsServer)
 	err = manager.Start()
 	if err != nil {
 		panic(err)

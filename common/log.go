@@ -2,6 +2,7 @@ package common
 
 import (
 	"fmt"
+	mconfig "mineNet/config"
 	"os"
 	"path/filepath"
 	"sync"
@@ -19,7 +20,7 @@ var (
 )
 
 // InitLogger 初始化全局日志实例
-func InitLogger(conf *Config) error {
+func InitLogger(conf *mconfig.LogConfig) error {
 	var err error
 	initOnce.Do(func() {
 		var logger *Logger
@@ -42,29 +43,12 @@ func GetLogger() *Logger {
 	return defaultLogger.Load().(*Logger)
 }
 
-// MustInitLogger 必须成功初始化日志实例，失败则panic
-func MustInitLogger(conf *Config) {
-	if err := InitLogger(conf); err != nil {
-		panic(err)
-	}
-}
-
-type Config struct {
-	LogPath     string // 日志文件路径
-	LogLevel    string // 日志级别 debug/info/warn/error
-	MaxSize     int    // 单个日志文件最大尺寸，单位 MB
-	MaxBackups  int    // 最大保留的日志文件数量
-	MaxAge      int    // 日志文件保留天数
-	Compress    bool   // 是否压缩历史日志
-	ShowConsole bool   // 是否同时输出到控制台
-}
-
 type Logger struct {
 	*zap.Logger
-	config *Config
+	config *mconfig.LogConfig
 }
 
-var defaultConfig = &Config{
+var defaultConfig = &mconfig.LogConfig{
 	LogPath:     "logs/app.log",
 	LogLevel:    "info",
 	MaxSize:     100,
@@ -75,7 +59,7 @@ var defaultConfig = &Config{
 }
 
 // New 创建日志实例
-func New(conf *Config) (*Logger, error) {
+func New(conf *mconfig.LogConfig) (*Logger, error) {
 	if conf == nil {
 		conf = defaultConfig
 	}

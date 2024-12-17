@@ -21,3 +21,7 @@ func (s *Server) Start() error {
 	log.Printf("Starting metrics server on %s", s.addr)
 	return http.ListenAndServe(s.addr, nil)
 }
+
+func (s *Server) Stop() error {
+	return nil
+}
